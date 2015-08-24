@@ -5,9 +5,9 @@ define( "DB_DSN", "mysql:host=localhost;dbname=cms" );
 define( "DB_USERNAME", "username" ); //Set these values to your MySQL username
 define( "DB_PASSWORD", "password" ); //Set these values to your MySQL password
 
-/*
-		---set path names : CLASS_PATH, which is the path to the class files, 
-		and TEMPLATE_PATH, which is where our script should look for the HTML template files.
+/**
+*	---set path names : CLASS_PATH, which is the path to the class files, 
+*	and TEMPLATE_PATH, which is where our script should look for the HTML template files.
 */
 define( "CLASS_PATH", "classes" );
 define( "TEMPLATE_PATH", "templates" );
@@ -15,19 +15,19 @@ define( "TEMPLATE_PATH", "templates" );
 
 define( "HOMEPAGE_NUM_ARTICLES", 5 ); // controls the maximum number of article headlines to display on the site homepage.
 
-/*
-		---constants contain the login details for the CMS admin user.
-*/
+/**
+*	---constants contain the login details for the CMS admin user.
+*/	
 define( "ADMIN_USERNAME", "admin" );
 define( "ADMIN_PASSWORD", "d033e22ae348aeb5660fc2140aec35850c4da997" ); // used sha-1 hash
 
-require( CLASS_PATH . "/Article.php" ); //Since the Article class file needed by all scripts in the app, we include it here.
+require( CLASS_PATH . "/article.php" ); //Since the Article class file needed by all scripts in the app, we include it here.
  
 
-
-/*
-		---simple function to handle any PHP exceptions that might be raised as our code runs.
+/**
+*	---simple function to handle any PHP exceptions that might be raised as our code runs.
 */
+
 function handleException( $exception ) {
   echo "Sorry, a problem occurred. Please try later.";
   error_log( $exception->getMessage() );
