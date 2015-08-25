@@ -2,10 +2,12 @@
 
 ## MyCMS
 
-Bootstrap
-HTML
-CSS
-JS
-JQUERY
-PHP
+Bootstrap X
+HTML X
+CSS X
+JS X
+JQUERY X
+PHP X
+PDO 
 
+## #DEVCOHOLIC
