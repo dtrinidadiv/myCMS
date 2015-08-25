@@ -7,6 +7,10 @@
                  Article
                     <small> | Archive</small>
                 </h1>
+                 <p style="text-align: right">
+                  <span class="glyphicon glyphicon-list"></span>
+                      <?php echo $results['totalRows']?> article<?php echo ( $results['totalRows'] != 1 ) ? 's' : '' ?> in total.
+                 </p>
 
                 <?php foreach ( $results['articles'] as $article ) { ?>
                    <h2>
@@ -19,10 +23,7 @@
                 <?php } ?>
           
               <hr>
-                 <p>
-                  <span class="glyphicon glyphicon-list"></span>
-                      <?php echo $results['totalRows']?> article<?php echo ( $results['totalRows'] != 1 ) ? 's' : '' ?> in total.
-                 </p>
+                
 
             </div>
           

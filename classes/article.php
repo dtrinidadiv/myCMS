@@ -115,7 +115,7 @@ class Article
   * @return Array|false A two-element array : results => array, a list of Article objects; totalRows => Total number of articles
   */
  
-  public static function getList( $numRows=1000000, $order="publicationDate DESC" ) {
+  public static function getList( $numRows=1000000, $order="id DESC" ) {
     $conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
     $sql = "SELECT SQL_CALC_FOUND_ROWS *, UNIX_TIMESTAMP(publicationDate) AS publicationDate FROM articles
             ORDER BY " . mysql_escape_string($order) . " LIMIT :numRows";
