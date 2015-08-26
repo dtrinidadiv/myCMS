@@ -49,7 +49,7 @@
                 <div class="col-xs-9 selectContainer">
                 <label class="control-label">Article Content</label>
                 
-                <textarea class ="form-control" name="content" id="content" placeholder="The HTML content of the article" required maxlength="100000" style="height: 30em;"><?php echo htmlspecialchars( $results['article']->content )?></textarea>
+                <textarea class ="form-control ckeditor" name="content" id="content" placeholder="The HTML content of the article" required maxlength="100000" style="height: 30em;"><?php echo htmlspecialchars( $results['article']->content )?></textarea>
              </div>
              </div>
             </div>
