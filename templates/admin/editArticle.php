@@ -62,6 +62,6 @@
         </div>
 
       </form>
-<hr>
+
 <?php include "templates/include/footer.php" ?>
 
