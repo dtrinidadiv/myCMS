@@ -20,7 +20,7 @@
 
             </div>
 
-          <a class="btn btn-primary" href="./?action=archive"><span class="glyphicon glyphicon-folder-close"></span>  Archive </a>
+          <a class="btn btn-default" href="./?action=archive"><span class="glyphicon glyphicon-folder-close"></span> Article Archive </a>
          
 
 

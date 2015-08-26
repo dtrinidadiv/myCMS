@@ -13,7 +13,7 @@ define( "CLASS_PATH", "classes" );
 define( "TEMPLATE_PATH", "templates" );
 
 
-define( "HOMEPAGE_NUM_ARTICLES", 3 ); // controls the maximum number of article headlines to display on the site homepage.
+define( "HOMEPAGE_NUM_ARTICLES", 5 ); // controls the maximum number of article headlines to display on the site homepage.
 
 /**
 *	---constants contain the login details for the CMS admin user.

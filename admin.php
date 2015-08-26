@@ -67,7 +67,7 @@ function login() {
     } else {
  
       // Login failed: display an error message to the user
-      $results['errorMessage'] = "Invalid username or password. Please try again.";
+      $results['errorMessage'] = "Invalid username or password.";
       require( TEMPLATE_PATH . "/admin/loginForm.php" );
     }
  

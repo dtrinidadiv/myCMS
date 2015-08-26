@@ -1,43 +1,54 @@
 <?php include "templates/include/header.php" ?>
+<?php include "templates/include/admin.php" ?>
 
-      <div id="adminHeader">
-        <h2>Widget News Admin</h2>
-        <p>You are logged in as <b><?php echo htmlspecialchars( $_SESSION['username']) ?></b>. <a href="admin.php?action=logout"?>Log out</a></p>
-      </div>
-
-      <h1>All Articles</h1>
-
-<?php if ( isset( $results['errorMessage'] ) ) { ?>
-        <div class="errorMessage"><?php echo $results['errorMessage'] ?></div>
+     
+    
+ <h1>All Articles</h1>
+ <?php if ( isset( $results['errorMessage'] ) ) { ?>
+        <div class="alert alert-danger">
+                      <i class="glyphicon glyphicon-remove-sign"></i> &nbsp;<?php echo $results['errorMessage'] ?>
+                 </div>
 <?php } ?>
-
-
 <?php if ( isset( $results['statusMessage'] ) ) { ?>
-        <div class="statusMessage"><?php echo $results['statusMessage'] ?></div>
+        <div class="alert alert-info">
+                      <i class="glyphicon glyphicon-thumbs-up"></i> &nbsp;<?php echo $results['statusMessage'] ?>
+                 </div>
 <?php } ?>
-
-      <table>
-        <tr>
-          <th>Publication Date</th>
-          <th>Article</th>
+ <table id="mytable" class="table table-bordred table-striped">
+                   
+           <thead>
+             <th>Publication Date</th>
+             <th>Article</th>
+             <th>Action</th>
+           </thead>
+           <tbody>
+    <?php foreach ( $results['articles'] as $article ) { ?>
+          <tr>
+    
+        <td><?php echo date('j M Y', $article->publicationDate)?></td>
+        <td><?php echo $article->title?></td>
+        <td>
+        <a class="btn btn-primary btn-xs" href="admin.php?action=editArticle&amp;articleId=<?php echo $article->id?>"><span class="glyphicon glyphicon-pencil"></span></a>
+        <a class="btn btn-danger btn-xs" href="admin.php?action=deleteArticle&amp;articleId=<?php echo $article->id?>"><span class="glyphicon glyphicon-trash"></span></a>
+      
+    
         </tr>
+    
+  </tbody>
+    <?php } ?>
+     <p style="text-align: right">
+        <span class="glyphicon glyphicon-list"></span>
+                      <?php echo $results['totalRows']?> article<?php echo ( $results['totalRows'] != 1 ) ? 's' : '' ?> in total.
+                 </p>
 
-<?php foreach ( $results['articles'] as $article ) { ?>
+</table>
 
-        <tr onclick="location='admin.php?action=editArticle&amp;articleId=<?php echo $article->id?>'">
-          <td><?php echo date('j M Y', $article->publicationDate)?></td>
-          <td>
-            <?php echo $article->title?>
-          </td>
-        </tr>
+ <a class="btn btn-default" href="admin.php?action=newArticle"><span class="glyphicon glyphicon-plus"></span> New Article </a>
 
-<?php } ?>
 
-      </table>
+   
 
-      <p><?php echo $results['totalRows']?> article<?php echo ( $results['totalRows'] != 1 ) ? 's' : '' ?> in total.</p>
 
-      <p><a href="admin.php?action=newArticle">Add a New Article</a></p>
 
 <?php include "templates/include/footer.php" ?>
 

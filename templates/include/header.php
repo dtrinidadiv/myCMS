@@ -12,6 +12,7 @@
    	<title><?php echo htmlspecialchars( $results['pageTitle'] )?></title>
 
      <link href="css/style.css" rel="stylesheet">
+     <link href="css/signin.css" rel="stylesheet">
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
@@ -52,7 +53,7 @@
                         <a href="#">Services</a>
                     </li>
                     <li>
-                        <a href="#">Contact</a>
+                        <a href="sx">Contact</a>
                     </li>
                 </ul>
             </div>
