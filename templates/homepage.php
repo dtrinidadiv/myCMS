@@ -10,7 +10,7 @@
 
            <?php foreach ( $results['articles'] as $article ) { ?>
           <div class="thumbnail">
-            <img src="http://placehold.it/740x250/EEE">
+            <img src="http://placehold.it/740x320/eee/0099CC">
               <div class="caption">
               <h2>
                 <a href=".?action=viewArticle&amp;articleId=<?php echo $article->id?>"><?php echo htmlspecialchars( $article->title )?></a>

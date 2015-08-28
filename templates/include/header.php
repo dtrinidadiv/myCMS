@@ -33,7 +33,7 @@
   <body>
   <div id="wrap">
      <!-- Navigation -->
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" style="background-color:#394A59">
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" style="background-color:#222222">
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -43,7 +43,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a style = "color:#007aff" class="navbar-brand" href=".">#DEVCOHOLIC</a>
+                <a style="color: #0099CC" class="navbar-brand" href="."><i style="color: #0099CC" class="glyphicon glyphicon-alert"></i> </a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
