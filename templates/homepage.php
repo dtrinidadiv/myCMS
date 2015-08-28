@@ -11,8 +11,11 @@
  					 <h2>
                     	<a href=".?action=viewArticle&amp;articleId=<?php echo $article->id?>"><?php echo htmlspecialchars( $article->title )?></a>
                		 </h2>
-               		 <p><span class="glyphicon glyphicon-time"></span><?php echo date('j F Y', $article->publicationDate)?></p>
-           			 <p class="summary"><?php echo htmlspecialchars( $article->summary )?></p>
+               		 <p><span class="glyphicon glyphicon-time"></span><?php echo date('j F Y', $article->publicationDate)?> 
+                   <?php if ( $article->categoryId ) { ?>
+            <span class="category">in <a href=".?action=archive&amp;categoryId=<?php echo $article->categoryId?>"><?php echo htmlspecialchars( $results['categories'][$article->categoryId]->name )?></a></span>
+            <?php } ?></p>
+           			    <p class="summary"><?php echo htmlspecialchars( $article->summary )?></p>
                 	 <a class="btn btn-primary" href=".?action=viewArticle&amp;articleId=<?php echo $article->id?>"><span class="glyphicon glyphicon-chevron-right"></span> Read More </a>
                      <hr>
  				<?php } ?>

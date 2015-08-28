@@ -1,30 +1,15 @@
 <?php
  
 require( "config.php" );
-
-//This PHP function starts a new session for the user, which we can use to track whether the user is logged in or not. 
-//(If a session for this user already exists, PHP automatically picks it up and uses it.)
 session_start();
-
-//Grab the action parameter and username session variable
-// / If a value doesn't exist then we set the corresponding variable to an empty string ("").
 $action = isset( $_GET['action'] ) ? $_GET['action'] : "";
 $username = isset( $_SESSION['username'] ) ? $_SESSION['username'] : "";
-
-/**
-*The user shouldn't be allowed to do anything unless they're logged in as an admin. 
-*So the next thing we do is inspect $username to see if the session contained a value for the username key, 
-*which we use to signify that the user is logged in. If $username's value is empty — and the user isn't already trying to log in or out — 
-*then we display the login page and exit immediately.
-*/
-
+ 
 if ( $action != "login" && $action != "logout" && !$username ) {
   login();
   exit;
 }
  
-
-// Decide which action to perform
 switch ( $action ) {
   case 'login':
     login();
@@ -41,33 +26,42 @@ switch ( $action ) {
   case 'deleteArticle':
     deleteArticle();
     break;
+  case 'listCategories':
+    listCategories();
+    break;
+  case 'newCategory':
+    newCategory();
+    break;
+  case 'editCategory':
+    editCategory();
+    break;
+  case 'deleteCategory':
+    deleteCategory();
+    break;
   default:
     listArticles();
 }
  
-
-//This is called when the user needs to log in, or is in the process of logging in.
+ 
 function login() {
  
   $results = array();
-  $results['pageTitle'] = "Administrator Login | #DEVCOHOLIC.ADMIN";
+  $results['pageTitle'] = "Admin Login | Widget News";
  
   if ( isset( $_POST['login'] ) ) {
  
     // User has posted the login form: attempt to log the user in
-
-    //ADMIN_USERNAME and ADMINP_PASSWORD Is Declared in config.php
-    //used sha1 hash for the password
-    if ($_POST['username']== ADMIN_USERNAME && sha1($_POST['password']) == ADMIN_PASSWORD ) { 
+ 
+    if ( $_POST['username'] == ADMIN_USERNAME && sha1($_POST['password']) == ADMIN_PASSWORD ) {
  
       // Login successful: Create a session and redirect to the admin homepage
       $_SESSION['username'] = ADMIN_USERNAME;
-      header( "Location: admin.php" ); //redirect the browser to admin.php
+      header( "Location: admin.php" );
  
     } else {
  
       // Login failed: display an error message to the user
-      $results['errorMessage'] = "Invalid username or password.";
+      $results['errorMessage'] = "Incorrect username or password. Please try again.";
       require( TEMPLATE_PATH . "/admin/loginForm.php" );
     }
  
@@ -79,7 +73,7 @@ function login() {
  
 }
  
-//It simply removes the username session key and redirects back to admin.php.
+ 
 function logout() {
   unset( $_SESSION['username'] );
   header( "Location: admin.php" );
@@ -108,6 +102,8 @@ function newArticle() {
  
     // User has not posted the article edit form yet: display the form
     $results['article'] = new Article;
+    $data = Category::getList();
+    $results['categories'] = $data['results'];
     require( TEMPLATE_PATH . "/admin/editArticle.php" );
   }
  
@@ -141,6 +137,8 @@ function editArticle() {
  
     // User has not posted the article edit form yet: display the form
     $results['article'] = Article::getById( (int)$_GET['articleId'] );
+    $data = Category::getList();
+    $results['categories'] = $data['results'];
     require( TEMPLATE_PATH . "/admin/editArticle.php" );
   }
  
@@ -148,14 +146,12 @@ function editArticle() {
  
  
 function deleteArticle() {
-  
-  //displaying an error if the article couldn't be found in the database
+ 
   if ( !$article = Article::getById( (int)$_GET['articleId'] ) ) {
     header( "Location: admin.php?error=articleNotFound" );
     return;
   }
  
-  //calls the article's delete() method to remove the article from the database.
   $article->delete();
   header( "Location: admin.php?status=articleDeleted" );
 }
@@ -166,21 +162,122 @@ function listArticles() {
   $data = Article::getList();
   $results['articles'] = $data['results'];
   $results['totalRows'] = $data['totalRows'];
+  $data = Category::getList();
+  $results['categories'] = array();
+  foreach ( $data['results'] as $category ) $results['categories'][$category->id] = $category;
   $results['pageTitle'] = "All Articles";
  
   if ( isset( $_GET['error'] ) ) {
-    if ( $_GET['error'] == "articleNotFound" ) 
-        $results['errorMessage'] = "Error: Article not found.";
+    if ( $_GET['error'] == "articleNotFound" ) $results['errorMessage'] = "Error: Article not found.";
   }
  
   if ( isset( $_GET['status'] ) ) {
-    if ( $_GET['status'] == "changesSaved" ) 
-        $results['statusMessage'] = "Your changes have been saved.";
-    if ( $_GET['status'] == "articleDeleted" ) 
-        $results['statusMessage'] = "Article deleted.";
+    if ( $_GET['status'] == "changesSaved" ) $results['statusMessage'] = "Your changes have been saved.";
+    if ( $_GET['status'] == "articleDeleted" ) $results['statusMessage'] = "Article deleted.";
   }
  
   require( TEMPLATE_PATH . "/admin/listArticles.php" );
+}
+ 
+ 
+function listCategories() {
+  $results = array();
+  $data = Category::getList();
+  $results['categories'] = $data['results'];
+  $results['totalRows'] = $data['totalRows'];
+  $results['pageTitle'] = "Article Categories";
+ 
+  if ( isset( $_GET['error'] ) ) {
+    if ( $_GET['error'] == "categoryNotFound" ) $results['errorMessage'] = "Error: Category not found.";
+    if ( $_GET['error'] == "categoryContainsArticles" ) $results['errorMessage'] = "Error: Category contains articles. Delete the articles, or assign them to another category, before deleting this category.";
+  }
+ 
+  if ( isset( $_GET['status'] ) ) {
+    if ( $_GET['status'] == "changesSaved" ) $results['statusMessage'] = "Your changes have been saved.";
+    if ( $_GET['status'] == "categoryDeleted" ) $results['statusMessage'] = "Category deleted.";
+  }
+ 
+  require( TEMPLATE_PATH . "/admin/listCategories.php" );
+}
+ 
+ 
+function newCategory() {
+ 
+  $results = array();
+  $results['pageTitle'] = "New Article Category";
+  $results['formAction'] = "newCategory";
+ 
+  if ( isset( $_POST['saveChanges'] ) ) {
+ 
+    // User has posted the category edit form: save the new category
+    $category = new Category;
+    $category->storeFormValues( $_POST );
+    $category->insert();
+    header( "Location: admin.php?action=listCategories&status=changesSaved" );
+ 
+  } elseif ( isset( $_POST['cancel'] ) ) {
+ 
+    // User has cancelled their edits: return to the category list
+    header( "Location: admin.php?action=listCategories" );
+  } else {
+ 
+    // User has not posted the category edit form yet: display the form
+    $results['category'] = new Category;
+    require( TEMPLATE_PATH . "/admin/editCategory.php" );
+  }
+ 
+}
+ 
+ 
+function editCategory() {
+ 
+  $results = array();
+  $results['pageTitle'] = "Edit Article Category";
+  $results['formAction'] = "editCategory";
+ 
+  if ( isset( $_POST['saveChanges'] ) ) {
+ 
+    // User has posted the category edit form: save the category changes
+ 
+    if ( !$category = Category::getById( (int)$_POST['categoryId'] ) ) {
+      header( "Location: admin.php?action=listCategories&error=categoryNotFound" );
+      return;
+    }
+ 
+    $category->storeFormValues( $_POST );
+    $category->update();
+    header( "Location: admin.php?action=listCategories&status=changesSaved" );
+ 
+  } elseif ( isset( $_POST['cancel'] ) ) {
+ 
+    // User has cancelled their edits: return to the category list
+    header( "Location: admin.php?action=listCategories" );
+  } else {
+ 
+    // User has not posted the category edit form yet: display the form
+    $results['category'] = Category::getById( (int)$_GET['categoryId'] );
+    require( TEMPLATE_PATH . "/admin/editCategory.php" );
+  }
+ 
+}
+ 
+ 
+function deleteCategory() {
+ 
+  if ( !$category = Category::getById( (int)$_GET['categoryId'] ) ) {
+    header( "Location: admin.php?action=listCategories&error=categoryNotFound" );
+    return;
+  }
+ 
+  $articles = Article::getList( 1000000, $category->id );
+ 
+  if ( $articles['totalRows'] > 0 ) {
+    header( "Location: admin.php?action=listCategories&error=categoryContainsArticles" );
+    return;
+  }
+ 
+  $category->delete();
+  header( "Location: admin.php?action=listCategories&status=categoryDeleted" );
 }
  
 ?>

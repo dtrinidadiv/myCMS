@@ -1,5 +1,6 @@
 <?php include "templates/include/header.php" ?>
 <?php include "templates/include/admin.php" ?>
+<?php include "templates/admin/include/header.php" ?>
 
       <h1><?php echo $results['pageTitle']?></h1>
       <hr>
@@ -43,6 +44,22 @@
              </div>
             </div>
 
+          <div class="form-group">
+             <div class="row">
+                <div class="col-xs-9 selectContainer">
+                <label class="control-label">Article Category</label>
+                <select class="form-control" name="categoryId">
+              <option value="0"<?php echo !$results['article']->categoryId ? " selected" : ""?>>(none)</option>
+            <?php foreach ( $results['categories'] as $category ) { ?>
+              <option value="<?php echo $category->id?>"<?php echo ( $category->id == $results['article']->categoryId ) ? " selected" : ""?>><?php echo htmlspecialchars( $category->name )?></option>
+            <?php } ?>
+            </select>
+
+              </div>
+             </div>
+            </div>
+
+
         <div class="form-group">
              <div class="row">
                 <div class="col-xs-9 selectContainer">
@@ -53,8 +70,8 @@
              </div>
             </div>
 
-               
-    
+             
+           
         <div class="col-xs-9 selectContainer" align = "right" class="buttons" >
           <input  class ="btn btn-primary" type="submit" name="saveChanges" value="Save Changes" />
           <input class ="btn btn-danger" type="submit" formnovalidate name="cancel" value="Cancel" />

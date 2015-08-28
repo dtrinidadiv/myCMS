@@ -1,6 +1,7 @@
 <?php include "templates/include/header.php" ?>
 <?php include "templates/include/admin.php" ?>
 
+
      
     
  <h1>All Articles</h1>
@@ -19,6 +20,7 @@
            <thead>
              <th>Publication Date</th>
              <th>Article</th>
+             <th>Category</th>
              <th>Action</th>
            </thead>
            <tbody>
@@ -27,6 +29,9 @@
     
         <td><?php echo date('j M Y', $article->publicationDate)?></td>
         <td><?php echo $article->title?></td>
+         <td>
+            <?php echo $results['categories'][$article->categoryId]->name?>
+          </td>
         <td>
         <a class="btn btn-primary btn-xs" href="admin.php?action=editArticle&amp;articleId=<?php echo $article->id?>"><span class="glyphicon glyphicon-pencil"></span></a>
         <a class="btn btn-danger btn-xs" href="admin.php?action=deleteArticle&amp;articleId=<?php echo $article->id?>"><span class="glyphicon glyphicon-trash"></span></a>

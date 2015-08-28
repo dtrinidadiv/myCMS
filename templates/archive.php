@@ -12,6 +12,11 @@
                       <?php echo $results['totalRows']?> article<?php echo ( $results['totalRows'] != 1 ) ? 's' : '' ?> in total.
                  </p>
 
+                 <h1><?php echo htmlspecialchars( $results['pageHeading'] ) ?></h1>
+<?php if ( $results['category'] ) { ?>
+      <h3 class="categoryDescription"><?php echo htmlspecialchars( $results['category']->description ) ?></h3>
+<?php } ?>
+
                 <?php foreach ( $results['articles'] as $article ) { ?>
                    <h2>
                         <a href=".?action=viewArticle&amp;articleId=<?php echo $article->id?>"><?php echo htmlspecialchars( $article->title )?></a>
@@ -22,7 +27,7 @@
 
                 <?php } ?>
           
-              <hr>
+              <br>
                 
 
             </div>

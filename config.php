@@ -22,6 +22,7 @@ define( "ADMIN_USERNAME", "admin" );
 define( "ADMIN_PASSWORD", "d033e22ae348aeb5660fc2140aec35850c4da997" ); // used sha-1 hash (admin)
 
 require( CLASS_PATH . "/article.php" ); //Since the Article class file needed by all scripts in the app, we include it here.
+require( CLASS_PATH . "/category.php" ); //Since the Category class file needed by all scripts in the app, we include it here.
  
 
 /**
