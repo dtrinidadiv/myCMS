@@ -46,7 +46,7 @@ switch ( $action ) {
 function login() {
  
   $results = array();
-  $results['pageTitle'] = "Admin Login | Widget News";
+  $results['pageTitle'] = "Admin Login Panel";
  
   if ( isset( $_POST['login'] ) ) {
  
