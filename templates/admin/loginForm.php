@@ -2,7 +2,7 @@
  <div class="wrapper" >
 
       <form class = "form-signin" action="admin.php?action=login" method="post" style="width: 50%;">
-      <center><h3 class="form-signin-heading"><i style="color: #051938" class="glyphicon glyphicon-cog"></i>  Admin Panel</h3></center>
+      <center><h3  class="form-signin-heading page-header"><i style="color: #0099CC" class="glyphicon glyphicon-cog"></i>  Admin Panel</h3></center>
       <hr>
         <input type="hidden" name="login" value="true" />
 
