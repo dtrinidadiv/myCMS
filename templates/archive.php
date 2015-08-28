@@ -4,15 +4,15 @@
 <!-- Blog Entries Column -->
             <div class="col-md-8">
               <h1 class="page-header">
-                 Article
-                    <small> | Archive</small>
+                 Article Archives
+                    <small> |<?php echo htmlspecialchars( $results['pageHeading'] ) ?></small>
                 </h1>
                  <p style="text-align: right">
                   <span class="glyphicon glyphicon-list"></span>
                       <?php echo $results['totalRows']?> article<?php echo ( $results['totalRows'] != 1 ) ? 's' : '' ?> in total.
                  </p>
 
-                 <h1><?php echo htmlspecialchars( $results['pageHeading'] ) ?></h1>
+                 
 <?php if ( $results['category'] ) { ?>
       <h3 class="categoryDescription"><?php echo htmlspecialchars( $results['category']->description ) ?></h3>
 <?php } ?>

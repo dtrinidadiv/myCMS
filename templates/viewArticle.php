@@ -1,6 +1,6 @@
 <?php include "templates/include/header.php" ?>
 
-      <h1 style="width: 75%;"><?php echo htmlspecialchars( $results['article']->title )?></h1>
+      <h1 class="page-header" style="width: 75%;"><?php echo htmlspecialchars( $results['article']->title )?></h1>
       <p><span class="glyphicon glyphicon-time"></span>Published on <?php echo date('j F Y', $results['article']->publicationDate)?>
 	      <?php if ( $results['category'] ) { ?>
 			        in <a href="./?action=archive&amp;categoryId=<?php echo $results['category']->id?>"><?php echo htmlspecialchars( $results['category']->name ) ?></a>

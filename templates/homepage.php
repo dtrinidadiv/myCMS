@@ -3,7 +3,7 @@
 
             <!-- Blog Entries Column -->
             <div class="col-md-8">
-            <h1 class="page-header">
+            <h1 class="page-header logo">
                    Programmers
                     <small> DEN</small>
                 </h1>

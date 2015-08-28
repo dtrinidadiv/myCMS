@@ -32,8 +32,8 @@ switch ( $action ) {
   $data = Category::getList();
   $results['categories'] = array();
   foreach ( $data['results'] as $category ) $results['categories'][$category->id] = $category;
-  $results['pageHeading'] = $results['category'] ?  $results['category']->name : "Article Archive";
-  $results['pageTitle'] = $results['pageHeading'] . " | Widget News";
+  $results['pageHeading'] = $results['category'] ?  $results['category']->name : "All ";
+  $results['pageTitle'] = $results['pageHeading'] . "Articles";
   require( TEMPLATE_PATH . "/archive.php" );
 }
 

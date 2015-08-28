@@ -6,6 +6,7 @@
   html,
   body {
     height: 100%;
+   
     /* The html and body elements cannot have any padding or margin. */
   }
   
@@ -23,6 +24,7 @@
   #footer {
     height: 60px;
     background-color: #D3D7DA;
+    font-family: Ubuntu;
   }
   
   
@@ -34,4 +36,33 @@
     margin: 20px 0;
   }
 
+
+@font-face {
+  font-family: Lobster;
+
+  src: url('../fonts/lobster.otf');
+ }
+
+
+@font-face {
+  font-family: Ubuntu;
+
+  src: url('../fonts/Ubuntu-L.ttf');
+ }
+
+
+ .logo {
+
+  font-family: Lobster;
+  font-size: 60px;
+ }
+  
+
+
+ .page-header{
+
+  font-family: Lobster;
+  font-size: 60px;
+  
+ }
   
