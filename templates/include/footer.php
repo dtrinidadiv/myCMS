@@ -2,9 +2,6 @@
    </div>
         <!-- /.row -->
 
-        <hr>
-
-
     </div>
     <!-- /.container -->
 </div>

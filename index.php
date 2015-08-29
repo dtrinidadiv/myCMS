@@ -6,11 +6,27 @@ require( "config.php" ); // include the config file so that all the configuratio
 * check that the $_GET['action'] value exists by using isset(). 
 *If it doesn't, we set the corresponding $action variable to an empty string ("").
 */
+session_start();
 $action = isset( $_GET['action'] ) ? $_GET['action'] : "";
- 
+$username = isset( $_SESSION['user-username'] ) ? $_SESSION['user-username'] : "";
 
+if (isset( $_SESSION['user-username'] ) && $action == 'user-login') {
+    homepage();
+  exit;
+}
+
+if ($action != "user-login" && $action != "user-logout" && !$username ) {
+    login();
+  exit;
+}
  // Decide which action to perform base on the $action value
 switch ( $action ) {
+   case 'user-login':
+    login();
+    break;
+  case 'user-logout':
+    logout();
+    break;
   case 'archive':
     archive();
     break;
@@ -21,6 +37,45 @@ switch ( $action ) {
     homepage();
 }
  
+ function login() {
+ 
+  $results = array();
+  $results['pageTitle'] = "User Login";
+ 
+  if ( isset( $_POST['user-login'] ) ) {
+ 
+    // User has posted the login form: attempt to log the user in
+ 
+    if ( $_POST['username'] == USER_USERNAME && $_POST['password'] == USER_PASSWORD ) {
+ 
+      // Login successful: Create a session and redirect to the admin homepage
+      $_SESSION['user-username'] = USER_USERNAME;
+      header( "Location: index.php" );
+ 
+    } else {
+ 
+      // Login failed: display an error message to the user
+      $results['errorMessage'] = "Incorrect username or password. Please try again.";
+      require( TEMPLATE_PATH . "/user/loginForm.php" );
+    }
+ 
+  } else {
+ 
+    // User has not posted the login form yet: display the form
+    require( TEMPLATE_PATH . "/user/loginForm.php" );
+  }
+ 
+}
+
+
+ 
+ 
+function logout() {
+  unset( $_SESSION['user-username'] );
+  header( "Location: index.php" );
+}
+
+
 
  function archive() {
   $results = array();

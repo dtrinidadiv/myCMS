@@ -49,19 +49,48 @@
             <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
               
                 <ul class="nav navbar-nav navbar-right"  >
+
+            <?php if(isset($_SESSION['user-username'])){ ?>]
+
                 <li style="padding-top:10px;padding-bottom:10px;padding-right:5px">
                     <img heigh="30px" width="30px" src="http://www.gravatar.com/avatar/">
 
                 </li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">user's name<span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"><b><?php echo htmlspecialchars( $_SESSION['user-username']) ?></b><span class="caret"></span></a>
                                                 <ul class="dropdown-menu">
                           <li><a href="#">Profile</a></li>
-                          <li><a href="#">Sign Out</a></li>
+                          <li><a href="?action=user-logout">Sign Out</a></li>
                   </ul>
               </li>
                 </ul>
 
+            <?php }?>
+        <!--     <li><p class="navbar-text">Already have an account?</p></li>
+                </li>
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">Sign in<span class="caret"></span></a>
+                                                <ul class="dropdown-menu"><hr>
+                          <form class="form" role="form" method="post" action="login" accept-charset="UTF-8" id="login-nav" style="padding-right:14px;padding-left:14px; min-width: 250px">
+                    <div class="form-group">
+                       <label class="sr-only" for="exampleInputEmail2">Email address</label>
+                       <input type="email" class="form-control" id="exampleInputEmail2" placeholder="Email address" required>
+                    </div>
+                    <div class="form-group">
+                       <label class="sr-only" for="exampleInputPassword2">Password</label>
+                       <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Password" required>
+                                             <div class="help-block text-right"><a href="">Forget the password ?</a></div>
+                    </div>
+                    <div class="form-group">
+                       <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+                    </div>
+        
+                 </form>
+                  </ul>
+              </li>
+                </ul>
+ -->
              <!--   <form class="navbar-form navbar-right" role="search">
                     <div class="form-group">
                         <input style="height:30px" type="text" class="form-control" name="username" placeholder="Username">

@@ -4,7 +4,12 @@ require( "config.php" );
 session_start();
 $action = isset( $_GET['action'] ) ? $_GET['action'] : "";
 $username = isset( $_SESSION['username'] ) ? $_SESSION['username'] : "";
- 
+
+if (isset( $_SESSION['username'] ) && $action == 'login') {
+   listArticles();
+  exit;
+}
+
 if ( $action != "login" && $action != "logout" && !$username ) {
   login();
   exit;
