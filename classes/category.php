@@ -77,13 +77,14 @@ class Category
   * @return Array|false A two-element array : results => array, a list of Category objects; totalRows => Total number of categories
   */
  
-  public static function getList( $numRows=1000000, $order="name ASC" ) {
+  public static function getList( $numRows=0, $perPage=10000000,$order="name ASC" ) {
     $conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
     $sql = "SELECT SQL_CALC_FOUND_ROWS * FROM categories
-            ORDER BY " . mysql_escape_string($order) . " LIMIT :numRows";
+            ORDER BY " . mysql_escape_string($order) . " LIMIT :numRows, :perPage";
  
     $st = $conn->prepare( $sql );
     $st->bindValue( ":numRows", $numRows, PDO::PARAM_INT );
+     $st->bindValue( ":perPage", $perPage, PDO::PARAM_INT );
     $st->execute();
     $list = array();
  

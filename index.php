@@ -26,7 +26,7 @@ switch ( $action ) {
   $results = array();
   $categoryId = ( isset( $_GET['categoryId'] ) && $_GET['categoryId'] ) ? (int)$_GET['categoryId'] : null;
   $results['category'] = Category::getById( $categoryId );
-  $data = Article::getList( 100000, $results['category'] ? $results['category']->id : null );
+  $data = Article::getList(0, 100000, $results['category'] ? $results['category']->id : null );
   $results['articles'] = $data['results'];
   $results['totalRows'] = $data['totalRows'];
   $data = Category::getList();
@@ -55,7 +55,7 @@ function viewArticle() {
  
 function homepage() {
   $results = array();
-  $data = Article::getList( HOMEPAGE_NUM_ARTICLES );
+  $data = Article::getList(0, HOMEPAGE_NUM_ARTICLES );
   $results['articles'] = $data['results'];
   $results['totalRows'] = $data['totalRows'];
   $data = Category::getList();

@@ -37,14 +37,18 @@
     <?php } ?>
      <p style="text-align: right">
         <span class="glyphicon glyphicon-list"></span>
-                      <?php echo $results['totalRows']?> categories<?php echo ( $results['totalRows'] != 1 ) ? 's' : '' ?> in total.
+                      <?php echo $results['totalRows']?><?php echo ( $results['totalRows'] != 1 ) ? ' categories' : ' category' ?> in total.
                  </p>
 
 </table>
 
+<div align="right">
  <a class="btn btn-default" href="admin.php?action=newCategory"><span class="glyphicon glyphicon-plus"></span> New Category </a>
+</div>
 
+ <?php
+// paging buttons will be here
+         include_once 'pagingCategory.php'; 
 
-
- 
+?>
 <?php include "templates/include/footer.php" ?>

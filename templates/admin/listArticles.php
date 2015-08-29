@@ -47,8 +47,17 @@
                  </p>
 
 </table>
+<div align = "right">
+  <a class="btn btn-default" href="admin.php?action=newArticle"><span class="glyphicon glyphicon-plus"></span> New Article </a>
+</div>
 
- <a class="btn btn-default" href="admin.php?action=newArticle"><span class="glyphicon glyphicon-plus"></span> New Article </a>
+<?php
+// paging buttons will be here
+         include_once 'pagingArticles.php'; 
+
+?>
+
+ 
 
 
    

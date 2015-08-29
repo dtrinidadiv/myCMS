@@ -158,8 +158,13 @@ function deleteArticle() {
  
  
 function listArticles() {
+  $record_per_page = ARTICLES_PAGE_PER_TABLE;  
+  if (isset($_GET["page"])) { $page  = $_GET["page"]; } else { $page=1; };  
+  $start_from = ($page-1) * $record_per_page;  
+
+
   $results = array();
-  $data = Article::getList();
+  $data = Article::getList($start_from,$record_per_page);
   $results['articles'] = $data['results'];
   $results['totalRows'] = $data['totalRows'];
   $data = Category::getList();
@@ -181,8 +186,13 @@ function listArticles() {
  
  
 function listCategories() {
+
+  $record_per_page = CATEGORIES_PAGE_PER_TABLE;  
+  if (isset($_GET["page"])) { $page  = $_GET["page"]; } else { $page=1; };  
+  $start_from = ($page-1) * $record_per_page;  
+
   $results = array();
-  $data = Category::getList();
+  $data = Category::getList($start_from,$record_per_page);
   $results['categories'] = $data['results'];
   $results['totalRows'] = $data['totalRows'];
   $results['pageTitle'] = "Article Categories";
@@ -190,7 +200,7 @@ function listCategories() {
   if ( isset( $_GET['error'] ) ) {
     if ( $_GET['error'] == "categoryNotFound" ) $results['errorMessage'] = "Error: Category not found.";
     if ( $_GET['error'] == "categoryContainsArticles" ) $results['errorMessage'] = "Error: Category contains articles. Delete the articles, or assign them to another category, before deleting this category.";
-  }
+  } 
  
   if ( isset( $_GET['status'] ) ) {
     if ( $_GET['status'] == "changesSaved" ) $results['statusMessage'] = "Your changes have been saved.";

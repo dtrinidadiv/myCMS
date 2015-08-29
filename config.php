@@ -14,6 +14,8 @@ define( "TEMPLATE_PATH", "templates" );
 
 
 define( "HOMEPAGE_NUM_ARTICLES",3 ); // controls the maximum number of article headlines to display on the site homepage.
+define( "ARTICLES_PAGE_PER_TABLE",3 ); // number of articles to be shown in a table for pagination
+define( "CATEGORIES_PAGE_PER_TABLE",2 );// number of categories to be shown in a table for pagination
 
 /**
 *	---constants contain the login details for the CMS admin user.
