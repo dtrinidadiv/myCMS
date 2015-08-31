@@ -43,12 +43,12 @@
               <br>
                 
 
+      <p> <a class="btn btn-default" href="./"> <span class="glyphicon glyphicon-home"></span> Return to Homepage</a></p>
+ 
             </div>
           
 
  
       
- 
-      <p> <a class="btn btn-default" href="./"> <span class="glyphicon glyphicon-home"></span> Return to Homepage</a></p>
  
 <?php include "templates/include/footer.php" ?>

@@ -28,6 +28,7 @@ define( "USER_PASSWORD", "user" );
 
 require( CLASS_PATH . "/article.php" ); //Since the Article class file needed by all scripts in the app, we include it here.
 require( CLASS_PATH . "/category.php" ); //Since the Category class file needed by all scripts in the app, we include it here.
+require( CLASS_PATH . "/user.php" ); //Since the User class file needed by all scripts in the app, we include it here.
  
 
 /**

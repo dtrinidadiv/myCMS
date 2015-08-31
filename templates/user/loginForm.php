@@ -1,7 +1,7 @@
 <?php include "templates/include/header.php" ?>
  <div class="wrapper" >
 <center><br><br>
-<div class="tabbable" style="width:40%">
+<div class="tabbable" >
   <ul class="nav nav-tabs" >
     <li class="active"><a href="#pane1" data-toggle="tab">Sign Up</a></li>
     <li><a href="#pane2" data-toggle="tab">Login</a></li>
@@ -10,7 +10,7 @@
   <div class="tab-content">
     <div id="pane1" class="tab-pane active">
      
-                            <form class = "form-signin" method="post" >
+                            <form class = "form-signin" action="?action=user-signup" method="post" >
                             <center><h3  class="form-signin-heading page-header">Sign Up</h3></center>
                             <hr>
                               <input type="hidden" name="user-signup" value="true" />
@@ -22,30 +22,39 @@
                                        </div>
 
                       <?php } ?>
+
+                        <?php if ( isset( $results['statusMessage'] ) ) { ?>
+
+                                <div class="alert alert-info">
+                                            <i class="glyphicon glyphicon-ok"></i> &nbsp;<?php echo $results['statusMessage'] ?>
+                                       </div>
+
+                      <?php } ?>
                             <div style="padding-bottom:5px">
 
                                    <input class="form-control" type="email" name="email" id="email" placeholder="email" required autofocus maxlength="20" />
                              </div> 
                              <div style="padding-bottom:5px">
-                                  <input class="form-control" type="text" name="signup-username" id="signup-username" placeholder="username" required autofocus maxlength="20" />
+                                  <input class="form-control" type="text" name="uname" id="uname" placeholder="username" required autofocus maxlength="20" />
                                </div> 
 
                               <div style="padding-bottom:5px">
-                                  <input class="form-control"  type="password" name="signup-password" id="signup-password" placeholder="password" required maxlength="20" />
+                                  <input class="form-control"  type="password" name="password" id="password" placeholder="password" required maxlength="20" />
                             </div> 
                            <hr>
 
 
                               <div class="buttons">
-                                <input class="btn btn-lg btn-danger btn-block" type="submit" name="user-sign-up" value="Sign Up" />
+                                <input class="btn btn-lg btn-danger btn-block" type="submit" name="user-signup" value="Sign Up" />
                               </div> 
 
                             </form>
     </div>
+
     <div id="pane2" class="tab-pane">
    
       <form class = "form-signin" action="?action=user-login" method="post" ">
-      <center><h3  class="form-signin-heading page-header">Login</h3></center>
+      <center><h3 class="form-signin-heading page-header">Login</h3></center>
       <hr>
         <input type="hidden" name="user-login" value="true" />
 

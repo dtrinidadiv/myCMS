@@ -52,16 +52,15 @@
 
             <?php if(isset($_SESSION['user-username'])){ ?>]
 
-                <li style="padding-top:10px;padding-bottom:10px;padding-right:5px">
-                    <img heigh="30px" width="30px" src="http://www.gravatar.com/avatar/">
+                
+                <img style="padding-top:10px;padding-bottom:10px;padding-right:5px"heigh="30px" width="30px" src="http://www.gravatar.com/avatar/">
 
-                </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"><b><?php echo htmlspecialchars( $_SESSION['user-username']) ?></b><span class="caret"></span></a>
                                                 <ul class="dropdown-menu">
                           <li><a href="#">Profile</a></li>
                           <li><a href="?action=user-logout">Sign Out</a></li>
-                  </ul>
+                
               </li>
                 </ul>
 

@@ -15,7 +15,7 @@ if (isset( $_SESSION['user-username'] ) && $action == 'user-login') {
   exit;
 }
 
-if ($action != "user-login" && $action != "user-logout" && !$username ) {
+if ($action != "user-login" && $action != "user-logout" && $action != "user-signup" && !$username ) {
     login();
   exit;
 }
@@ -27,6 +27,9 @@ switch ( $action ) {
   case 'user-logout':
     logout();
     break;
+  case 'user-signup':
+    signup();
+    break; 
   case 'archive':
     archive();
     break;
@@ -41,16 +44,35 @@ switch ( $action ) {
  
   $results = array();
   $results['pageTitle'] = "User Login";
- 
+  $username = isset( $_POST['username'] ) ? $_POST['username']: "";
+  $password = isset( $_POST['password'] ) ? $_POST['password']: "";
+
   if ( isset( $_POST['user-login'] ) ) {
- 
+      
+      $conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
+       $sql = "SELECT * FROM users WHERE uname = :uname or email = :email LIMIT 1";
+       $st = $conn->prepare( $sql );
+       $st->bindValue( ":uname", $username, PDO::PARAM_STR);
+       $st->bindValue( ":email", $username, PDO::PARAM_STR);
+       $st->execute();
+       $user=$st->fetch(PDO::FETCH_ASSOC);
     // User has posted the login form: attempt to log the user in
  
-    if ( $_POST['username'] == USER_USERNAME && $_POST['password'] == USER_PASSWORD ) {
- 
-      // Login successful: Create a session and redirect to the admin homepage
-      $_SESSION['user-username'] = USER_USERNAME;
-      header( "Location: index.php" );
+    if ($st->rowCount()>0) {
+        
+        if($user['password']==sha1($password))
+        {
+                  // Login successful: Create a session and redirect to the admin homepage
+              $_SESSION['user-username'] = $user['uname'];
+              header( "Location: index.php" );
+        }
+        else
+        {
+              // Login failed: display an error message to the user
+          $results['errorMessage'] = "Incorrect username or password. Please try again.";
+          require( TEMPLATE_PATH . "/user/loginForm.php" );
+        }
+     
  
     } else {
  
@@ -67,7 +89,47 @@ switch ( $action ) {
  
 }
 
+ function signup() {
+  $uname = isset( $_POST['uname'] ) ? $_POST['uname']: "";
+  $email = isset( $_POST['email'] ) ? $_POST['email']: "";
+  $results = array();
+  $results['pageTitle'] = "User Signup";
+  try
+      {
+         $conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
+         $sql = "SELECT * FROM users WHERE uname = :uname or email = :email";
+         $st = $conn->prepare( $sql );
+         $st->bindValue( ":uname", $uname, PDO::PARAM_STR);
+         $st->bindValue( ":email", $email, PDO::PARAM_STR);
+         $st->execute();
+         $row=$st->fetch(PDO::FETCH_ASSOC);
+    
+         if($row['uname']==$uname) {
+            $results['errorMessage'] = "sorry username already taken !";
+         }
+         else if($row['email']==$email) {
+             $results['errorMessage']  = "sorry email id already taken !";
+         }
+         else
+        {
+           $user = new User;
+           $user->storeFormValues( $_POST );
+           $user->insert();
+           $results['statusMessage'] = "You have already Sign Up.";
+              
+        }
 
+      require( TEMPLATE_PATH . "/user/loginForm.php" );
+    }
+    catch(PDOException $e)
+    {
+      echo $e->getMessage();
+    }
+    
+    
+   
+    
+}
  
  
 function logout() {
