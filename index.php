@@ -30,6 +30,9 @@ switch ( $action ) {
   case 'user-signup':
     signup();
     break; 
+  case 'profile':
+    profilepage();
+    break; 
   case 'archive':
     archive();
     break;
@@ -64,8 +67,9 @@ switch ( $action ) {
             
             if($user['password']==sha1($password))
             {
-                      // Login successful: Create a session and redirect to the admin homepage
+                      // Login successful: Create a session and redirect to the homepage
                   $_SESSION['user-username'] = $user['uname'];
+                  $_SESSION['user-email'] = $user['email'];
                   header( "Location: index.php" );
             }
             else
@@ -201,6 +205,12 @@ function homepage() {
   foreach ( $data['results'] as $category ) $results['categories'][$category->id] = $category; 
   $results['pageTitle'] = "#DEVCOHOLICS";
   require( TEMPLATE_PATH . "/homepage.php" );
+}
+
+
+function profilepage() {
+  $results['pageTitle'] = "My Profile";
+  require( TEMPLATE_PATH . "/user/profile.php" );
 }
  
 ?>
