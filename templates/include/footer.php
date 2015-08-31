@@ -22,7 +22,7 @@
     <script src="ckeditor/ckeditor.js"></script>
     <!-- CKFINDER-->
     <script src="ckfinder/ckfinder.js"></script>
-
+    <script src='https://www.google.com/recaptcha/api.js'></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>

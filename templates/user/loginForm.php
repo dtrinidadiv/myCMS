@@ -41,9 +41,10 @@
                               <div style="padding-bottom:5px">
                                   <input class="form-control"  type="password" name="password" id="password" placeholder="password" required maxlength="20" />
                             </div> 
+                            <div class="g-recaptcha" data-sitekey="6LfEFQwTAAAAANT50P6QI37lzc9eW1AEh3UXJ1FN"></div>
+
                            <hr>
-
-
+                          
                               <div class="buttons">
                                 <input class="btn btn-lg btn-danger btn-block" type="submit" name="user-signup" value="Sign Up" />
                               </div> 

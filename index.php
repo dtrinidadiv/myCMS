@@ -1,7 +1,7 @@
 <?php
  
 require( "config.php" ); // include the config file so that all the configuration settings are available to the script
-
+require_once "recaptchalib.php";
 /**
 * check that the $_GET['action'] value exists by using isset(). 
 *If it doesn't, we set the corresponding $action variable to an empty string ("").
@@ -47,45 +47,47 @@ switch ( $action ) {
   $username = isset( $_POST['username'] ) ? $_POST['username']: "";
   $password = isset( $_POST['password'] ) ? $_POST['password']: "";
 
-  if ( isset( $_POST['user-login'] ) ) {
-      
-      $conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
-       $sql = "SELECT * FROM users WHERE uname = :uname or email = :email LIMIT 1";
-       $st = $conn->prepare( $sql );
-       $st->bindValue( ":uname", $username, PDO::PARAM_STR);
-       $st->bindValue( ":email", $username, PDO::PARAM_STR);
-       $st->execute();
-       $user=$st->fetch(PDO::FETCH_ASSOC);
-    // User has posted the login form: attempt to log the user in
- 
-    if ($st->rowCount()>0) {
-        
-        if($user['password']==sha1($password))
-        {
-                  // Login successful: Create a session and redirect to the admin homepage
-              $_SESSION['user-username'] = $user['uname'];
-              header( "Location: index.php" );
-        }
-        else
-        {
-              // Login failed: display an error message to the user
+
+  
+      if ( isset( $_POST['user-login'] ) ) {
+          
+          $conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
+           $sql = "SELECT * FROM users WHERE uname = :uname or email = :email LIMIT 1";
+           $st = $conn->prepare( $sql );
+           $st->bindValue( ":uname", $username, PDO::PARAM_STR);
+           $st->bindValue( ":email", $username, PDO::PARAM_STR);
+           $st->execute();
+           $user=$st->fetch(PDO::FETCH_ASSOC);
+        // User has posted the login form: attempt to log the user in
+     
+        if ($st->rowCount()>0) {
+            
+            if($user['password']==sha1($password))
+            {
+                      // Login successful: Create a session and redirect to the admin homepage
+                  $_SESSION['user-username'] = $user['uname'];
+                  header( "Location: index.php" );
+            }
+            else
+            {
+                  // Login failed: display an error message to the user
+              $results['errorMessage'] = "Incorrect username or password. Please try again.";
+              require( TEMPLATE_PATH . "/user/loginForm.php" );
+            }
+         
+     
+        } else {
+     
+          // Login failed: display an error message to the user
           $results['errorMessage'] = "Incorrect username or password. Please try again.";
           require( TEMPLATE_PATH . "/user/loginForm.php" );
         }
      
- 
-    } else {
- 
-      // Login failed: display an error message to the user
-      $results['errorMessage'] = "Incorrect username or password. Please try again.";
-      require( TEMPLATE_PATH . "/user/loginForm.php" );
-    }
- 
-  } else {
- 
-    // User has not posted the login form yet: display the form
-    require( TEMPLATE_PATH . "/user/loginForm.php" );
-  }
+      } else {
+     
+        // User has not posted the login form yet: display the form
+        require( TEMPLATE_PATH . "/user/loginForm.php" );
+      }
  
 }
 
@@ -94,6 +96,26 @@ switch ( $action ) {
   $email = isset( $_POST['email'] ) ? $_POST['email']: "";
   $results = array();
   $results['pageTitle'] = "User Signup";
+
+
+  // your secret key
+  $secret = "6LfEFQwTAAAAAGNUT7yin4y2udoEQQniyWIZH9K8";
+  // empty response
+  $response = null;
+  // check secret key
+  $reCaptcha = new ReCaptcha($secret);
+
+    // if submitted check response
+  if ($_POST["g-recaptcha-response"]) {
+      $response = $reCaptcha->verifyResponse(
+          $_SERVER["REMOTE_ADDR"],
+          $_POST["g-recaptcha-response"]
+      );
+  }else{
+     $results['errorMessage'] = "Robot ka ba?!";
+  }
+
+if ($response != null && $response->success) { 
   try
       {
          $conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
@@ -119,15 +141,14 @@ switch ( $action ) {
               
         }
 
-      require( TEMPLATE_PATH . "/user/loginForm.php" );
+      
     }
     catch(PDOException $e)
     {
       echo $e->getMessage();
     }
-    
-    
-   
+ }
+   require( TEMPLATE_PATH . "/user/loginForm.php" );
     
 }
  
