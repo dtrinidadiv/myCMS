@@ -28,3 +28,4 @@
 
       </form>
 </div>
+<?php include "templates/include/footer.php" ?>

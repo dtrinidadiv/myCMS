@@ -67,9 +67,9 @@
 
 <?php } ?>
 
-       
-            <input class="form-control" type="text" name="username" id="username" placeholder="username" required autofocus maxlength="20" />
-        
+       <div  style="padding-bottom:5px">
+            <input  style="padding-bottom:5px"class="form-control" type="text" name="username" id="username" placeholder="username" required autofocus maxlength="20" />
+        </div>
         
             <input class="form-control"  type="password" name="password" id="password" placeholder="password" required maxlength="20" />
      <hr>
