@@ -101,25 +101,6 @@ switch ( $action ) {
   $results = array();
   $results['pageTitle'] = "User Signup";
 
-
-  // your secret key
-  $secret = "6LfEFQwTAAAAAGNUT7yin4y2udoEQQniyWIZH9K8";
-  // empty response
-  $response = null;
-  // check secret key
-  $reCaptcha = new ReCaptcha($secret);
-
-    // if submitted check response
-  if ($_POST["g-recaptcha-response"]) {
-      $response = $reCaptcha->verifyResponse(
-          $_SERVER["REMOTE_ADDR"],
-          $_POST["g-recaptcha-response"]
-      );
-  }else{
-     $results['errorMessage'] = "Robot ka ba?!";
-  }
-
-if ($response != null && $response->success) { 
   try
       {
          $conn = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
@@ -151,7 +132,7 @@ if ($response != null && $response->success) {
     {
       echo $e->getMessage();
     }
- }
+
    require( TEMPLATE_PATH . "/user/loginForm.php" );
     
 }
