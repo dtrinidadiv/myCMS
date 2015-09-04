@@ -28,7 +28,7 @@
     <script src="js/bootstrap.min.js"></script>
 
      <script>
-            CKEDITOR.replace( 'editor1', {
+            CKEDITOR.replace( 'content', {
                 filebrowserBrowseUrl: 'ckfinder/ckfinder.html',
                 filebrowserUploadUrl: 'ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files'
             } );

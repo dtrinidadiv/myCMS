@@ -162,8 +162,8 @@ class Article
     $sql = "INSERT INTO articles ( publicationDate, categoryId, title, summary, content ) VALUES ( FROM_UNIXTIME(:publicationDate), :categoryId, :title, :summary, :content )";
     $st = $conn->prepare ( $sql );
     $st->bindValue( ":publicationDate", $this->publicationDate, PDO::PARAM_INT );
-    $st->bindValue( ":categoryId", $this->categoryId, PDO::PARAM_INT );
-    $st->bindValue( ":title", $this->title, PDO::PARAM_STR );
+    $st->bindValue( ":categoryId",1, PDO::PARAM_INT );
+    $st->bindValue( ":title", "$this->title", PDO::PARAM_STR );
     $st->bindValue( ":summary", $this->summary, PDO::PARAM_STR );
     $st->bindValue( ":content", $this->content, PDO::PARAM_STR );
     $st->execute();
